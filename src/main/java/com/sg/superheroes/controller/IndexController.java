@@ -31,8 +31,9 @@ public class IndexController {
     @GetMapping("/")
     public String displayFeed(Model model) {
         List<Sighting> sightings = sightingDao.getAllSightings();
+        sightings.sort((s1, s2) -> s2.getDate().compareTo(s1.getDate()));
         if (sightings.size() > 10) {
-            sightings = sightings.subList(sightings.size() - 10, sightings.size());
+            sightings = sightings.subList(0, 10);
         }
         model.addAttribute("sightings", sightings);
         return "index";
